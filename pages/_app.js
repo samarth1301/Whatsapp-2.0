@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }) {
       db.collection('users').doc(user.uid).set({
         email: user.email,
         lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+        name: user.displayName,
         photoURL: user.photoURL
       },{
         merge:true

@@ -13,6 +13,7 @@ const Sidebar = () => {
     const [user] = useAuthState(auth);
     const userChatRef = db.collection("chats").where('users','array-contains',user?.email);
     const [chatsSnapshot]= useCollection(userChatRef);
+    
     const searchHandle = (e) => { 
         console.log(e.target.value); 
     } 
@@ -40,7 +41,7 @@ const Sidebar = () => {
     
  
     return ( 
-        <div style={{height:"99vh"}} className=" bg-white lg:w-1/3 md:w-3/4  w-full px-2"> 
+        <div style={{height:"99vh"}} className=" h-screen  bg-white lg:w-1/3 md:w-1/2  w-full px-2"> 
         <Scrollbars 
                 autoHide 
                 autoHideTimeout={1000} 

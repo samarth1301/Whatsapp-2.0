@@ -21,8 +21,10 @@ const ChatScreen = ({ chat, messages }) => {
 
     const Profile = reciepentEmailSnapshot?.docs[0]?.data().photoURL;
     const lastSeen = reciepentEmailSnapshot?.docs[0]?.data()?.lastSeen.toDate();
+    const name = reciepentEmailSnapshot?.docs?.[0]?.data()?.name;
+    
+    const email = getreceipantsEmail(users, user);
     const endOfMessageRef= useRef(null);
-    console.log(lastSeen);
     const router = useRouter();
     const [input, setinput] = useState("");
     const [messagesSnapshot] = useCollection(
@@ -90,14 +92,14 @@ const ChatScreen = ({ chat, messages }) => {
 
 
     return (
-        <div className="h-screen w-full md:w-5/6 px-4 ">
+        <div className="w-full h-screen  md:w-5/6 px-4 ">
           <Scrollbars
                 autoHide
                 autoHideTimeout={1000}
                 autoHideDuration={200}>
-                <div className=" w-full  relative " >
-                    <div className="flex items-center justify-between bg-white border-2 border-gray-400 p-2 sticky top-0 z-30" >
-                        <div className="flex items-center gap-4">
+                <div className=" w-full relative " >
+                    <div className="flex items-center justify-between bg-white border-2  border-gray-400 p-2 sticky top-0 z-30" >
+                        <div className="flex pt-2 items-center gap-4">
 
                             {
                                 Profile ?
@@ -109,7 +111,10 @@ const ChatScreen = ({ chat, messages }) => {
                                     </div>
                             }
                             <div>
-                                <h1 className="text-lg font-bold" >{getreceipantsEmail(users,user)}</h1>
+                                <div className="break-words w-max  " style={{maxWidth: "13rem"}} >
+                                     <h1 className="text-lg font-bold  " >{name? name: email}</h1>
+
+                                </div>
                                 <div className="text-md flex gap-1  text-gray-500" >
                                     Last Active: 
                                     {
@@ -128,19 +133,19 @@ const ChatScreen = ({ chat, messages }) => {
                             <MdOutlineAttachFile />
                         </div>
                     </div>
-                    <div className=" w-full h-max p-4 flex flex-col gap-2" style={{minHeight: "90vh",backgroundImage: `url("https://www.tekportal.net/wp-content/uploads/2019/01/b-g-3655.jpg")`, backgroundRepeat: "no-repeat", backgroundSize:"cover", backgroundAttachment:"fixed" }} >
+                    <div className="   p-4 flex flex-col gap-2 " style={{minHeight: "90vh",backgroundImage: `url("https://www.tekportal.net/wp-content/uploads/2019/01/b-g-3655.jpg")`, backgroundRepeat: "no-repeat", backgroundSize:"cover", backgroundAttachment:"fixed" }} >
                     
                         {showMessages()}
-                        <div ref={endOfMessageRef}>
+                        <div className="h-12" ref={endOfMessageRef}>
 
                         </div>
                      
                 
                     </div>
-                    <form className="sticky bottom-0 bg-gray-300 p-3 px-10 flex justify-between z-30">
+                    <form className="sticky bottom-0  bg-gray-300 p-3 px-10 flex justify-between z-30">
                         <div className="flex gap-5 items-center w-full">
                             <CgSmileMouthOpen className="w-6 h-6" />
-                            <input value={input} onChange={(e=> setinput(e.target.value))}  className="w-full p-4 rounded-md" />
+                            <input value={input} onChange={(e=> setinput(e.target.value))}  className="w-1/2 md:w-full p-4 rounded-md" />
                             <ImMic className="w-6 h-6 rounded-full text-" />
                             <button type="submit" onClick={sendMessage} disabled={!input} className="bg-green-500 font-bold px-4 py-2 rounded-md">Send</button>
                         </div>
@@ -148,7 +153,8 @@ const ChatScreen = ({ chat, messages }) => {
                 </div>
 
                 </Scrollbars>
-          
+
+           
                 </div>
                 
     )
